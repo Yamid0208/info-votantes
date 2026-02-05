@@ -1,0 +1,49 @@
+<div class="scanner-container">
+  <div class="scanner-wrapper">
+    <!-- Video y Canvas para procesamiento -->
+    <video #video hidden></video>
+    <canvas #canvas></canvas>
+
+    <!-- Overlay con UI de escaneo -->
+    <div class="scanner-overlay" *ngIf="isScanning">
+      <!-- Marco de escaneo -->
+      <div class="scan-frame">
+        <div class="frame-corner corner-top-left"></div>
+        <div class="frame-corner corner-top-right"></div>
+        <div class="frame-corner corner-bottom-left"></div>
+        <div class="frame-corner corner-bottom-right"></div>
+      </div>
+
+      <!-- Indicador de escaneo -->
+      <div class="scan-indicator">
+        <div class="scan-line"></div>
+        <p>Posiciona tu cédula dentro del marco</p>
+      </div>
+
+      <!-- Botón para detener -->
+      <button class="btn-stop" (click)="stopScanning()">
+        <span>✕</span> Cancelar
+      </button>
+    </div>
+
+    <!-- Panel de controles (cuando no está escaneando) -->
+    <div class="control-panel" *ngIf="!isScanning">
+      <h2>Escáner de Cédula</h2>
+      <p>Presiona el botón para comenzar a escanear tu cédula de ciudadanía colombiana</p>
+
+      <button class="btn-scan" (click)="startScanning()">
+        <span class="icon">📷</span>
+        Iniciar Escaneo
+      </button>
+
+      <!-- Información del documento detectado -->
+      <div class="info-panel" *ngIf="documentDetected">
+        <div class="success-message">
+          <span class="checkmark">✓</span>
+          <h3>Cédula Detectada</h3>
+          <p>Tu documento ha sido capturado exitosamente</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

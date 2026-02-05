@@ -1,0 +1,113 @@
+<div class="p-6">
+  <h1 class="text-2xl font-bold mb-6">Dashboard</h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Card -->
+    <div class="bg-white rounded-xl shadow-sm p-6 flex justify-between items-center">
+      <div>
+        <p class="text-gray-500 text-sm flex items-center gap-2">
+          <mat-icon class="text-gray-400 text-base">person</mat-icon>
+          Asistencia electoral
+        </p>
+        <p class="text-3xl font-bold mt-2">0</p>
+      </div>
+
+      <mat-icon class="text-green-400 text-5xl">person</mat-icon>
+    </div>
+
+    <!-- Card -->
+    <div class="bg-white rounded-xl shadow-sm p-6 flex justify-between items-center">
+      <div>
+        <p class="text-gray-500 text-sm flex items-center gap-2">
+          <mat-icon class="text-gray-400 text-base">list</mat-icon>
+          Registros Totales
+        </p>
+        <p class="text-3xl font-bold mt-2">1,250</p>
+      </div>
+
+      <mat-icon class="text-green-400 text-5xl">format_list_bulleted</mat-icon>
+    </div>
+
+    <!-- Card -->
+    <div class="bg-white rounded-xl shadow-sm p-6 flex justify-between items-center">
+      <div>
+        <p class="text-gray-500 text-sm flex items-center gap-2">
+          <mat-icon class="text-gray-400 text-base">group</mat-icon>
+          Usuarios Activos
+        </p>
+        <p class="text-3xl font-bold mt-2">350</p>
+      </div>
+
+      <mat-icon class="text-green-400 text-5xl">groups</mat-icon>
+    </div>
+  </div>
+
+  <div>
+    <mat-card class="mt-6">
+      <mat-card-header>
+        <mat-card-title class="text-lg font-bold">Referidos registrados</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- Filtros y Acciones -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-6 items-center justify-between">
+          <div class="flex flex-col sm:flex-row gap-4 flex-1">
+            <input type="text" placeholder="Buscar..." class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
+            <select class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+              <option value="">Filtrar por estado</option>
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+            </select>
+          </div>
+          <div class="flex gap-2">
+            <button (click)="onExportar()" class="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 text-sm">
+              <mat-icon class="text-base">download</mat-icon>
+              Exportar
+            </button>
+            <button (click)="onCrearNuevo()" class="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-500 text-sm">
+              <mat-icon class="text-base">add</mat-icon>
+              Crear nuevo
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabla -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-gray-100 border-b">
+              <tr>
+                <th *ngFor="let columna of columnasTabla" class="px-4 py-3 font-semibold text-gray-700">
+                  {{ columna.label }}
+                </th>
+                <th class="px-4 py-3 font-semibold text-gray-700">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let referido of referidos" class="border-b hover:bg-gray-50">
+                <td *ngFor="let columna of columnasTabla" class="px-4 py-3">
+                  <ng-container [ngSwitch]="columna.key">
+                    <span *ngSwitchCase="'estado'" [ngClass]="{
+                      'bg-green-100 text-green-700': referido.estado === 'Activo',
+                      'bg-red-100 text-red-700': referido.estado === 'Inactivo'
+                    }" class="px-3 py-1 rounded-full text-xs font-semibold">
+                      {{ referido[columna.key] }}
+                    </span>
+                    <span *ngSwitchDefault>{{ referido[columna.key] }}</span>
+                  </ng-container>
+                </td>
+                <td class="px-4 py-3 flex gap-2">
+                  <button (click)="onEditar(referido)" class="text-blue-500 hover:text-blue-700">
+                    <mat-icon class="text-base">edit</mat-icon>
+                  </button>
+                  <button (click)="onEliminar(referido)" class="text-red-500 hover:text-red-700">
+                    <mat-icon class="text-base">delete</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

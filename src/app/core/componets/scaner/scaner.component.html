@@ -1,0 +1,20 @@
+
+<div class="scanner-container">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="startScanner()"
+    *ngIf="!isScannerVisible"
+  >
+    <mat-icon>camera_alt</mat-icon>
+    Escanear Cédula
+  </button>
+
+  <div *ngIf="isScannerVisible">
+    <zxing-scanner
+      [formats]="allowedFormats"
+      (scanSuccess)="scanSuccessHandler($event)"
+      [device]="undefined"
+    ></zxing-scanner>
+  </div>
+</div>
